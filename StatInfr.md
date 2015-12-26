@@ -1,11 +1,6 @@
----
-title: "Statistical Inference Assignment Part 1"
-author: "agcode"
-date: "18 December 2015"
-output: 
-  html_document:
-    keep_md: true
----
+# Statistical Inference Assignment Part 1
+agcode  
+18 December 2015  
 
 ---
 
@@ -31,8 +26,8 @@ The exponential distribution is be simulated in R with rexp(n, lambda) where lam
 
 The following code performs the simulations to create the necessary simulated data:
 
-```{r simulationchunk, echo=TRUE}
 
+```r
 # set seed for reproducability
 set.seed(23)
 
@@ -47,7 +42,6 @@ simulations <- 1000
 
 # simulate n=1000
 simulated_exponentials <- replicate(simulations, rexp(n, lambda))
-
 ```
 
 ---
@@ -59,15 +53,30 @@ Theoritical mean : The expected mean of a exponential distribution of rate *lamb
 
 Sample mean : The sample mean is calculated by using the *mean* function in R.
 
-```{r meanchunk, echo=TRUE}
+
+```r
 # calculate mean of exponentials
 means_exponentials <- apply(simulated_exponentials, 2, mean)
 # Sample mean
 sample_mean <- mean(means_exponentials)
 sample_mean
+```
+
+```
+## [1] 5.01425
+```
+
+```r
 # analytical mean
 theory_mean <- 1/lambda
 theory_mean
+```
+
+```
+## [1] 5
+```
+
+```r
 # visualization
 hist(means_exponentials, xlab = "mean", main = "Exponential Function Simulations", breaks= 50, prob=TRUE)
 lines(density(means_exponentials))
@@ -80,9 +89,11 @@ lines(xfit, yfit, pch=22, col="red", lty=2)
 legend('topright', c("simulation", "theoretical"), lty=c(1,2), col=c("black", "red"))
 ```
 
+![](./StatInfr_files/figure-html/meanchunk-1.png) 
+
 ##### Observation 
 
-While the sample mean is `r sample_mean` , the theoritical mean (*1/lambda*) is `r theory_mean` . The difference between them is not significant and this is shown in the above visualisation. 
+While the sample mean is 5.0142497 , the theoritical mean (*1/lambda*) is 5 . The difference between them is not significant and this is shown in the above visualisation. 
 
 According to the Central Limit Theorem, given a sufficiently large sample size from a population with a finite level of variance, the mean of all samples from the same population will be approximately equal to the mean of the population.
 
@@ -93,13 +104,28 @@ The following code calculates the sample variance and the theoritical variance a
 
 The theoretical variance of the population is given by sigma^2.
 
-```{r variancechunk, echo=TRUE}
+
+```r
 # sample var
 sample_var <- var(means_exponentials)
 sample_var
+```
+
+```
+## [1] 0.6862199
+```
+
+```r
 # theoritical var
 theory_var <- ((1/lambda)/sqrt(n))^2
 theory_var
+```
+
+```
+## [1] 0.625
+```
+
+```r
 #Visualisation
 hist(means_exponentials,breaks=90,prob=T,col="yellow",xlab = "means",main="Density of means",ylab="density")
 lines(xfit, yfit, pch=22, col="black", lty=5)
@@ -113,9 +139,11 @@ abline(v=1/lambda, col="red")
 abline(v=sample_mean, col="black")
 ```
 
+![](./StatInfr_files/figure-html/variancechunk-1.png) 
+
 ##### Observation : 
 
-While the sample mean is `r sample_var` , the theoritical mean (*((1/lambda)/sqrt(n))^2*) is `r theory_var` . The difference between them is not significant and this is shown in the above visualisation.
+While the sample mean is 0.6862199 , the theoritical mean (*((1/lambda)/sqrt(n))^2*) is 0.625 . The difference between them is not significant and this is shown in the above visualisation.
  
 The figure above shows the density computed using the histogram and the normal density plotted with theoretical mean have similar variance values.
 
@@ -124,9 +152,12 @@ The figure above shows the density computed using the histogram and the normal d
 ### V. Distribution
 As per the central limit theorem, the averages of samples follow normal distribution.  The theoretical quantiles again match closely with the actual quantiles.
 
-```{r distributionchunk, echo=TRUE}
+
+```r
 qqnorm(means_exponentials); qqline(means_exponentials)
 ```
+
+![](./StatInfr_files/figure-html/distributionchunk-1.png) 
 
 ##### Observation : 
  
